@@ -2,11 +2,6 @@
   programs.home-manager.enable = true;
   home.stateVersion = "20.03";
 
-  xdg.configFile."kak/kakrc".source = ./kak/kakrc;
-  xdg.configFile."kak/autoload".source = ./kak/autoload;
-  xdg.configFile."kak/colors".source = ./kak/colors;
-  xdg.configFile."tig/config".source = ./tig.cfg;
-
   home = {
     packages = with pkgs; [
       kakoune
@@ -63,4 +58,11 @@
   };
 
   home.file.".inputrc".source = ./inputrc;
+
+  xdg.configFile."kak/kakrc".source = ./kak/kakrc;
+  xdg.configFile."kak/autoload".source = ./kak/autoload;
+  xdg.configFile."kak/colors".source = ./kak/colors;
+
+  xdg.configFile."tig/config".source = ./tig.cfg;
+
 }
