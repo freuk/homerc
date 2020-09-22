@@ -8,12 +8,19 @@
   xdg.configFile."tig/config".source = ./tig.cfg;
 
   home = {
-
-    packages = [
-      pkgs.kakoune
-      pkgs.nnn
-      (pkgs.writeShellScriptBin "t" "${pkgs.tig}/bin/tig status $@").out
-      pkgs.tig
+    packages = with pkgs; [
+      kakoune
+      nnn
+      tig
+      fasd
+      ripgrep
+      exa
+      nixfmt
+      hwloc
+      htop
+      git
+      tree
+      bat
     ];
 
     sessionVariables = {
@@ -26,10 +33,34 @@
 
   programs.bash = {
     enable = true;
-    bashrcExtra = builtins.readFile ./bashrc;
+    shellAliases = {
+      s = "nix-shell";
+      t = "tig status";
+      tm = "tmux";
+      tb = "nc termbin.com 9999";
+      ls = "exa";
+      ll = "exa -l";
+      l = "exa -la";
+      gst = "git status";
+      gc = "git commit";
+      ga = "git add";
+      gps = "git push";
+      gpu = "git pull";
     };
-  home.file.".inputrc".source = ./inputrc;
-  # home.file.".bashrc".source = ./bashrc;
+    bashrcExtra = builtins.readFile ./bashrc;
+  };
 
-  # programs.bash = { enable = true; };
+  programs.tmux = {
+    enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      pain-control
+      copycat
+      fzf-tmux-url
+      open
+      prefix-highlight
+    ];
+    extraConfig = builtins.readFile ./tmux.cfg;
+  };
+
+  home.file.".inputrc".source = ./inputrc;
 }

@@ -142,15 +142,3 @@ back-jump () {
 bind -m emacs-standard '"\C-h": " \C-b\C-k \C-uback-jump\e\C-e\er\C-m\C-y\C-a\e \C-y\ey\C-x\C-x\C-d"'
 bind -m vi-command '"\C-h": "\C-z\C-h\C-z"'
 bind -m vi-insert '"\C-h": "\C-z\C-h\C-z"'
-
-alias tb='nc termbin.com 9999'
-alias ls='exa'
-alias s='nix-shell'
-alias ll='exa -l'
-alias l='exa -la'
-
-alias gst='git status'
-alias gc='git commit'
-alias ga='git add'
-alias gps='git push'
-alias gpu='git pull'
