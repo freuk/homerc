@@ -27,6 +27,7 @@
       NNN_OPENER = ./nnn/nuke;
       NNN_PLUG = "f:preview-tui";
       NNN_FIFO = "/tmp/nnn.fifo";
+      LANG = "C.UTF-8";
     };
   };
 
