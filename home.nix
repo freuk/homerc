@@ -43,6 +43,7 @@
       l = "exa -la";
       gst = "git status";
       gc = "git commit";
+      g = "git";
       ga = "git add";
       gps = "git push";
       k = "kak";
