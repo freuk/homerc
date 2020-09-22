@@ -16,6 +16,7 @@
       git
       tree
       bat
+      fzf
     ];
 
     sessionVariables = {
