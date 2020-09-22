@@ -142,3 +142,5 @@ back-jump () {
 bind -m emacs-standard '"\C-h": " \C-b\C-k \C-uback-jump\e\C-e\er\C-m\C-y\C-a\e \C-y\ey\C-x\C-x\C-d"'
 bind -m vi-command '"\C-h": "\C-z\C-h\C-z"'
 bind -m vi-insert '"\C-h": "\C-z\C-h\C-z"'
+
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi 
