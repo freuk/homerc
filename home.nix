@@ -20,6 +20,9 @@
 
     sessionVariables = {
       TERM = "tmux-256color";
+      EDITOR = "kak";
+      VISUAL = "kak";
+      PAGER = "less";
       NNN_OPENER = ./nnn/nuke;
       NNN_PLUG = "f:preview-tui";
       NNN_FIFO = "/tmp/nnn.fifo";
