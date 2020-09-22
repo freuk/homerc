@@ -40,6 +40,7 @@
       gc = "git commit";
       ga = "git add";
       gps = "git push";
+      k = "kak";
       gpu = "git pull";
     };
     bashrcExtra = builtins.readFile ./bashrc;
