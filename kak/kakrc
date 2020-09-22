@@ -1,0 +1,161 @@
+#A-<key> Rebinds
+map global normal <minus> ,
+map global goto t a
+map global user a <A-a>
+map global user b <A-b>
+map global user c <A-c>
+map global user C <A-C>
+map global user B <A-B>
+map global user s <A-s>
+map global user x <A-x>
+map global user b <A-b>
+map global user z <A-z>
+map global user Z <A-Z>
+map global user m <A-m>
+map global user M <A-M>
+map global user p <A-p>
+map global user P <A-P>
+map global user e <A-e>
+map global user j <A-j>
+map global user J <A-J>
+map global user l <A-l>
+map global user L <A-L>
+map global user h <A-h>
+map global user a <A-a>
+map global user i <A-i>
+map global user / <A-/>
+map global user n <A-n>
+map global user k <A-k>
+map global user K <A-K>
+map global user s <A-s>
+map global user ) <A-)>
+map global user ( <A-(>
+map global user w <A-w>
+map global user . <A-.>
+map global user <space> <A-space>
+map global user <semicolon> <A-semicolon>
+
+wiki-setup %sh{ echo $HOME/notational }
+
+#custom binds
+map global user a '*%s<ret>' -docstring 'select all'
+map global user y '<a-|>xclip -i -selection clipboard<ret>'
+map global user p '!xclip -o<ret>'
+
+map global normal '#' :comment-line<ret> -docstring 'comment line'
+map global user '#' :comment-block<ret> -docstring 'comment block'
+
+map global user f ':format<ret>:lint<ret>'
+# map global insert <tab> '<a-;><gt>'
+# map global insert <s-tab> '<a-;><lt>'
+
+#
+alias global x write-quit
+
+add-highlighter global/ number-lines
+
+set-face global LineNumbers rgb:696969,default
+
+#cosmetic
+set-face global Search +bi
+set-face global search +bi
+set global ui_options ncurses_assistant=none
+face global Information white
+face global Error red
+
+add-highlighter global/ column '80' default,rgb:111111
+
+#Control-P imitation
+def find -params 1 -shell-script-candidates %{ find -type f } %{ edit %arg{1} }
+# map global normal <C-p> ':find '
+map global normal <c-b> ': fzf-mode<ret>'
+map global normal <c-p> ': fzf-mode<ret>f'
+hook global ModuleLoaded fzf %{
+    set-option global fzf_file_command "rg"
+}
+
+map global user W '|fmt --width 80<ret>' -docstring "Wrap selection to 80 columns"
+
+map global user r '<a-i>p|fmt --width 80<ret>' -docstring "Wrap paragraph to 80 columns"
+
+set-option global indentwidth 2
+hook global InsertChar \t %{ try %{
+      execute-keys -draft "h<a-h><a-k>\A\h+\z<ret><a-;>;%opt{indentwidth}@"
+}}
+hook global InsertDelete ' ' %{ try %{
+      execute-keys -draft 'h<a-h><a-k>\A\h+\z<ret>i<space><esc><lt>'
+}}
+
+#language specific
+#
+eval %sh{kak-lsp --kakoune -s $kak_session}
+lsp-enable
+# lsp-auto-hover-enable
+
+hook global WinSetOption filetype=dhall %{
+  set buffer lintcmd 'true'
+  set buffer formatcmd 'dhall format'
+}
+hook global WinSetOption filetype=c %{
+  set buffer lintcmd 'true'
+  set buffer formatcmd "clang-format -style='WebKit'"
+}
+hook global WinSetOption filetype=python %{
+  set buffer lintcmd 'true'
+  set buffer formatcmd "black -"
+}
+hook global WinSetOption filetype=haskell %{
+  map global user H '<a-|>xargs hoogle-lucky <ret>'
+  map global user h ':lsp-hover <ret>'
+  map global user f ':lsp-formatting <ret>'
+  set buffer lintcmd 'hlint'
+  set buffer formatcmd 'ormolu'
+  lint-enable
+  lint
+}
+hook global WinSetOption filetype=nix %{
+  set buffer lintcmd 'nix-linter'
+  set buffer formatcmd 'nixfmt'
+  lint-enable
+  lint
+}
+hook global WinSetOption filetype=(markdown|latex) %{
+  set-option buffer autowrap_column 80
+  autowrap-enable
+}
+
+
+# add-highlighter global/ show-whitespaces
+
+declare-option str background 'rgb:282a36'
+declare-option str dimmed_background 'rgb:44475a'
+
+set-face global ShowCharactersBackground %opt{background}
+set-face global ShowCharactersDimmedBackground %opt{dimmed_background}
+
+# Hook on filetype is required
+hook global WinSetOption filetype=.* %{
+  require-module show-characters
+  # Fix duplicate show-characters highlighter
+  # Not sure why it is needed
+  remove-highlighter window/show-characters
+  add-highlighter window/show-characters ref show-characters
+  hook -always -once window WinSetOption filetype=.* %{
+    remove-highlighter window/show-characters
+  }
+}
+
+provide-module show-characters %{
+  add-highlighter shared/show-characters regions
+  add-highlighter shared/show-characters/code default-region group
+  add-highlighter shared/show-characters/code/tab regex '\t+' 0:red,red
+  add-highlighter shared/show-characters/code/trailing-whitespaces regex '\h+$' 0:red,red
+  add-highlighter shared/show-characters/code/cesure regex '‐+' 0:red
+  add-highlighter shared/show-characters/code/range-of-values regex '‑+' 0:blue
+  add-highlighter shared/show-characters/code/u+2013 regex '–+' 0:green
+  add-highlighter shared/show-characters/code/u+2014 regex '—+' 0:green+b
+  add-highlighter shared/show-characters/code/u+2015 regex '―+' 0:red
+  add-highlighter shared/show-characters/code/math regex '[−×]+' 0:cyan
+  add-highlighter shared/show-characters/code/opening-quotation-mark regex '[“‘]+' 0:cyan
+  add-highlighter shared/show-characters/code/closing-quotation-mark regex '”+' 0:cyan+u
+}
