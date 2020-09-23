@@ -5,6 +5,7 @@
   home = {
     packages = with pkgs; [
       kakoune
+      kak-lsp
       nnn
       tig
       fasd
@@ -69,6 +70,7 @@
   xdg.configFile."kak/kakrc".source = ./kak/kakrc;
   xdg.configFile."kak/autoload".source = ./kak/autoload;
   xdg.configFile."kak/colors".source = ./kak/colors;
+  xdg.configFile."kak-lsp/kak-lsp.toml".source = ./kak-lsp.toml;
 
   xdg.configFile."tig/config".source = ./tig.cfg;
 
