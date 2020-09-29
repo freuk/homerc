@@ -1,8 +1,10 @@
 # homerc
 
+for a non-nixos system:
 ```
 #nix installation
 curl -L https://nixos.org/nix/install | sh
+. /home/cc/.nix-profile/etc/profile.d/nix.sh
 
 #making everything 20.03
 nix-channel --remove nixpkgs
