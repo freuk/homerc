@@ -22,4 +22,6 @@ rm ~/.bashrc
 
 export TERM=tmux-256color
 nix-shell '<home-manager>' -A install
+
+#re-login or source bashrc.
 ```
