@@ -18,6 +18,7 @@ git clone https://github.com/freuk/homerc.git ~/.config/nixpkgs
 
 # potentially an issue depending on the situation, evidently:
 rm ~/.bash_profile
+rm ~/.bashrc
 
 export TERM=tmux-256color
 nix-shell '<home-manager>' -A install
