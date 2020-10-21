@@ -74,7 +74,7 @@ hook global ModuleLoaded fzf %{
     set-option global fzf_file_command "rg"
 }
 
-map global user W '|fmt --width 80<ret>' -docstring "Wrap selection to 80 columns"
+map global user W '| fmt --width 80<ret>' -docstring "Wrap selection to 80 columns"
 
 map global user r '<a-i>p|fmt --width 80<ret>' -docstring "Wrap paragraph to 80 columns"
 
@@ -109,7 +109,7 @@ hook global WinSetOption filetype=python %{
 hook global WinSetOption filetype=haskell %{
   map global user H '<a-|>xargs hoogle-lucky <ret>'
   map global user h ':lsp-hover <ret>'
-  map global user f ':lsp-formatting <ret>'
+  map global user f ':format<ret>'
   set buffer lintcmd 'hlint'
   set buffer formatcmd 'ormolu'
   lint-enable

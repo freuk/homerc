@@ -2,6 +2,13 @@
   programs.home-manager.enable = true;
   home.stateVersion = "20.03";
 
+  nixpkgs.overlays = [
+    (final: previous: {
+      obs-v4l2sink = previous.lib.callPackageWith previous ./obs-v4l2sink.nix {};
+    })
+  ];
+
+
   home = {
     packages = with pkgs; [
       kakoune
@@ -11,6 +18,7 @@
       fasd
       ripgrep
       exa
+      aspell
       nixfmt
       hwloc
       htop
@@ -32,6 +40,11 @@
     };
   };
 
+  programs.obs-studio = {
+    enable = true;
+    plugins = [ pkgs.obs-v4l2sink ];
+  };
+
   programs.bash = {
     enable = true;
     shellAliases = {
@@ -50,7 +63,9 @@
       k = "kak";
       gpu = "git pull";
     };
-    bashrcExtra = builtins.readFile ./bashrc;
+    bashrcExtra = (builtins.readFile ./bashrc) + ''
+      . ~/.nix-profile/etc/profile.d/hm-session-vars.sh
+    '';
   };
 
   programs.tmux = {
