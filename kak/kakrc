@@ -122,6 +122,7 @@ hook global WinSetOption filetype=nix %{
   lint
 }
 hook global WinSetOption filetype=(markdown|latex) %{
+  map global user f ':spell <ret>'
   set-option buffer autowrap_column 80
   autowrap-enable
 }
