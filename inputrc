@@ -1,3 +1,4 @@
+set bind-tty-special-chars off
 set editing-mode vi
 set keymap vi
 "\C-h": nop

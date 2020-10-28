@@ -24,9 +24,9 @@ if [ -z "$IN_NIX_SHELL" ]; then
   PROMPT="\[\e[40;0;37m\][\u@\h:\w\$(parse_git_branch)]$ \[\e[40;0;37m\]"
 else
   if [ "$IN_NIX_SHELL" = impure ]; then
-    PROMPT="\[\e[40;0;33m\][nix-shell:\W$(parse_git_branch)]$ \[\e[40;0;37m\]"
+    PROMPT="\[\e[40;0;33m\][nix-shell:\w$(parse_git_branch)]$ \[\e[40;0;37m\]"
   else
-    PROMPT="\[\e[40;0;32m\][nix-shell:\W$(parse_git_branch)]$ \[\e[40;0;37m\]"
+    PROMPT="\[\e[40;0;32m\][nix-shell:\w$(parse_git_branch)]$ \[\e[40;0;37m\]"
   fi
 fi
 export PS1=$PROMPT
@@ -105,6 +105,15 @@ _fuzzyJump_ () {
 bind -m emacs-standard '"\C-v": " \C-b\C-k \C-u`_fuzzyJump_`\e\C-e\er\C-m\C-y\C-a\e \C-y\ey\C-x\C-x\C-d"'
 bind -m vi-command '"\C-v": "\C-z\C-v\C-z"'
 bind -m vi-insert '"\C-v": "\C-z\C-v\C-z"'
+
+#C-s: insert nix-shell
+stty stop undef
+_insertNixShell_ () {
+    printf 'clear; nix-shell'
+}
+bind -m emacs-standard '"\C-s": " \C-b\C-k \C-u`_insertNixShell_`\e\C-e\er\C-m\C-y\C-a\e \C-y\ey\C-x\C-x\C-d"'
+bind -m vi-command '"\C-s": "\C-z\C-s\C-z"'
+bind -m vi-insert '"\C-s": "\C-z\C-s\C-z"'
 
 #C-n: jumping
 nnn-jump ()
