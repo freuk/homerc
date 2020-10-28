@@ -8,6 +8,9 @@ export HISTFILE=~/.bash_eternal_history
 parse_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
 }
+
+export PROMPT_DIRTRIM=2
+
 #coloring
 function restore() {
   if [ "$PS1" != "$PROMPT" ]; then
