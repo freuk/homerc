@@ -11,8 +11,6 @@ map global user x <A-x>
 map global user b <A-b>
 map global user z <A-z>
 map global user Z <A-Z>
-map global user m <A-m>
-map global user M <A-M>
 map global user p <A-p>
 map global user P <A-P>
 map global user e <A-e>
@@ -34,6 +32,9 @@ map global user w <A-w>
 map global user . <A-.>
 map global user <space> <A-space>
 map global user <semicolon> <A-semicolon>
+
+map global user m :mark-word<ret>
+map global user M :mark-clear<ret>
 
 wiki-setup %sh{ echo $HOME/notational }
 

@@ -109,7 +109,7 @@ bind -m vi-insert '"\C-v": "\C-z\C-v\C-z"'
 #C-s: insert nix-shell
 stty stop undef
 _insertNixShell_ () {
-    printf 'clear; nix-shell'
+    printf 'nix-shell'
 }
 bind -m emacs-standard '"\C-s": " \C-b\C-k \C-u`_insertNixShell_`\e\C-e\er\C-m\C-y\C-a\e \C-y\ey\C-x\C-x\C-d"'
 bind -m vi-command '"\C-s": "\C-z\C-s\C-z"'
@@ -155,4 +155,4 @@ bind -m emacs-standard '"\C-h": " \C-b\C-k \C-uback-jump\e\C-e\er\C-m\C-y\C-a\e 
 bind -m vi-command '"\C-h": "\C-z\C-h\C-z"'
 bind -m vi-insert '"\C-h": "\C-z\C-h\C-z"'
 
-if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi 
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi
