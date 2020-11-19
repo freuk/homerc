@@ -111,9 +111,7 @@ in {
     "kak/autoload".source = ./kak/autoload;
     "kak/colors".source = ./kak/colors;
     "kak-lsp/kak-lsp.toml".source = ./kak-lsp.toml;
-
     "tig/config".source = ./tig.cfg;
-
   } // optionalX11Attrs { "gromit-mpx.cfg".source = ./gromit-mpx.cfg; };
 
 }

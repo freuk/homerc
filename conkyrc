@@ -4,10 +4,10 @@ conky.config = {
 -------------------------------------
 --  Generic Settings
 -------------------------------------
-background=true,
+background=false,
 update_interval=1,
 double_buffer=true,
-alignment= 'top_right',
+alignment= 'middle_left',
 no_buffers=true,
 
 draw_shades=false,
@@ -24,10 +24,10 @@ gap_y=70,
 minimum_height=250,
 minimum_width=360,
 
-own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
+-- own_window_hints="undecorated,below,sticky,skip_taskbar,skip_pager",
 own_window = true,
-own_window_transparent =true ,
-own_window_class = 'Conky',
+own_window_transparent = true ,
+own_window_class = 'override',
 own_window_type = 'desktop',
 
 own_window_argb_visual=true,
@@ -38,7 +38,7 @@ own_window_argb_value=0,
 --  Text Settings
 -------------------------------------
 use_xft=true,
-xftalpha=1,
+xftalpha=0,
 font='PragmataPro Mono Liga:size=12',
 use_xft=true,
 text_buffer_size=256,
@@ -48,18 +48,18 @@ override_utf8_locale=true,
 -------------------------------------
 --  Color Scheme
 -------------------------------------
-default_color="FFFFFF",
+default_color="000000",
 
-color0="FFFFFF",  --  hours
-color1="FFFFFF",  --  clock dots
-color2="FFFFFF",  --  minutes
-color3="FFFFFF",  --  week day
-color4="FFFFFF",  --  month day
-color5="FFFFFF",  --  month
-color6="FFFFFF",  --  current temp
-color7="FFFFFF",  --  min temp
-color8="FFFFFF",  --  max temp
-color9="FFFFFF",  --  current conditions
+color0="000000",  --  hours
+color1="000000",  --  clock dots
+color2="000000",  --  minutes
+color3="000000",  --  week day
+color4="000000",  --  month day
+color5="000000",  --  month
+color6="000000",  --  current temp
+color7="000000",  --  min temp
+color8="000000",  --  max temp
+color9="000000",  --  current conditions
 
 
 -------------------------------------
