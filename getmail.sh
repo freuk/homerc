@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -eE
-trap 'notify-send -u cricital "Mail sync failed."'
+trap 'notify-send -u cricital "Mail sync failed."' ERR
 
 function func() {
   BEFORE=$( NOTMUCH_CONFIG=/run/user/1000/secrets/notmuch notmuch count \

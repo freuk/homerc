@@ -7,12 +7,18 @@ let
 in {
   home.stateVersion = "20.03";
 
-  nixpkgs = optionalX11Attrs {
+  nixpkgs = {
     overlays = [
-      (final: previous: {
-        obs-v4l2sink =
-          previous.lib.callPackageWith previous ./obs-v4l2sink.nix { };
-      })
+      (final: previous:
+        {
+          tomb = previous.tomb.overrideAttrs (o: {
+            src = builtins.fetchTarball
+              "https://github.com/dyne/Tomb/archive/v2.8.1.tar.gz";
+          });
+        } // optionalX11Attrs {
+          obs-v4l2sink =
+            previous.lib.callPackageWith previous ./obs-v4l2sink.nix { };
+        })
     ];
   };
 
@@ -20,6 +26,8 @@ in {
     packages = with pkgs;
       [
         kakoune
+        tomb
+        pinentry-curses
         kak-lsp
         nnn
         tig
