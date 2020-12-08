@@ -42,8 +42,8 @@ wiki-setup %sh{ echo $HOME/notational }
 map global user a '*%s<ret>' -docstring 'select all'
 map global normal y '<a-|>xclip -i -selection clipboard<ret>'
 map global normal d '<a-|>xclip -i -selection clipboard<ret>d'
-map global normal p '!xclip -selection clipboard -o<ret>'
-map global normal P '<a-!>xclip -selection clipboard -o<ret>'
+map global normal P '!xclip -selection clipboard -o<ret>'
+map global normal p '<a-!>xclip -selection clipboard -o<ret>'
 
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global user '#' :comment-block<ret> -docstring 'comment block'
@@ -112,6 +112,7 @@ hook global WinSetOption filetype=python %{
 hook global WinSetOption filetype=haskell %{
   map global user H '<a-|>xargs hoogle-lucky <ret>'
   map global user h ':lsp-hover <ret>'
+  map global user d ':lsp-definition <ret>'
   map global user f ':format<ret>'
   set buffer lintcmd 'hlint'
   set buffer formatcmd 'ormolu'
