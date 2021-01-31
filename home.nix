@@ -16,8 +16,8 @@ in {
               "https://github.com/dyne/Tomb/archive/v2.8.1.tar.gz";
           });
         } // optionalX11Attrs {
-          obs-v4l2sink =
-            previous.lib.callPackageWith previous ./obs-v4l2sink.nix { };
+          # obs-v4l2sink =
+            # previous.lib.callPackageWith previous ./obs-v4l2sink.nix { };
         })
     ];
   };
@@ -51,7 +51,7 @@ in {
       ] ++ pkgs.lib.optionals (context.x11) [
         gnome3.gnome-tweak-tool
         protonmail-bridge
-        skypeforlinux
+        # skypeforlinux
         conky
       ];
 
@@ -104,10 +104,10 @@ in {
       extraConfig = builtins.readFile ./tmux.cfg;
     };
   } // optionalX11Attrs {
-    obs-studio = {
-      enable = true;
-      plugins = [ pkgs.obs-v4l2sink ];
-    };
+    # obs-studio = {
+    #   enable = true;
+    #   plugins = [ pkgs.obs-v4l2sink ];
+    # };
   };
 
   home.file = {

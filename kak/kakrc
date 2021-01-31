@@ -40,10 +40,10 @@ wiki-setup %sh{ echo $HOME/notational }
 
 #custom binds
 map global user a '*%s<ret>' -docstring 'select all'
-map global normal y '<a-|>xclip -i -selection clipboard<ret>'
-map global normal d '<a-|>xclip -i -selection clipboard<ret>d'
-map global normal P '!xclip -selection clipboard -o<ret>'
-map global normal p '<a-!>xclip -selection clipboard -o<ret>'
+# map global normal y '<a-|>xclip -i -selection clipboard<ret>'
+# map global normal d '<a-|>xclip -i -selection clipboard<ret>d'
+# map global normal p '!xclip -selection clipboard -o<ret>'
+# map global normal P '<a-!>xclip -selection clipboard -o<ret>'
 
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global user '#' :comment-block<ret> -docstring 'comment block'
@@ -125,14 +125,16 @@ hook global WinSetOption filetype=nix %{
   lint-enable
   lint
 }
+
+hook global WinSetOption filetype=terraform %{
+  set buffer formatcmd 'terraform fmt'
+}
+
 hook global WinSetOption filetype=(markdown|latex) %{
   map global user f ':spell <ret>'
   set-option buffer autowrap_column 80
   autowrap-enable
 }
-
-
-# add-highlighter global/ show-whitespaces
 
 declare-option str background 'rgb:282a36'
 declare-option str dimmed_background 'rgb:44475a'
