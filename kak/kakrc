@@ -40,10 +40,9 @@ wiki-setup %sh{ echo $HOME/notational }
 
 #custom binds
 map global user a '*%s<ret>' -docstring 'select all'
-# map global normal y '<a-|>xclip -i -selection clipboard<ret>'
-# map global normal d '<a-|>xclip -i -selection clipboard<ret>d'
-# map global normal p '!xclip -selection clipboard -o<ret>'
-# map global normal P '<a-!>xclip -selection clipboard -o<ret>'
+map global user y '<a-|>xclip -i -selection clipboard<ret>'
+map global user d '<a-|>xclip -i -selection clipboard<ret>d'
+map global user p '!xclip -selection clipboard -o<ret>'
 
 map global normal '#' :comment-line<ret> -docstring 'comment line'
 map global user '#' :comment-block<ret> -docstring 'comment block'
@@ -66,6 +65,7 @@ set global ui_options ncurses_assistant=none
 face global Information white
 face global Error red
 
+cursorline
 add-highlighter global/ column '80' default,rgb:111111
 
 #Control-P imitation
@@ -89,18 +89,25 @@ hook global InsertDelete ' ' %{ try %{
       execute-keys -draft 'h<a-h><a-k>\A\h+\z<ret>i<space><esc><lt>'
 }}
 
-addhl global/ wrap -word -indent -marker ->>
+# addhl global/ wrap add-highlighter -word -indent -marker |>
+# addhl global/ column 81 default,red
+# addhl global/ wrap -word -indent -width 92 -marker ☇
 
-#language specific
-#
+map global user l %{: enter-user-mode lsp<ret>} -docstring "LSP mode"
 eval %sh{kak-lsp --kakoune -s $kak_session}
 lsp-enable
 # lsp-auto-hover-enable
+
 
 hook global WinSetOption filetype=dhall %{
   set buffer lintcmd 'true'
   set buffer formatcmd 'dhall format'
 }
+hook global WinSetOption filetype=html %{
+  set buffer lintcmd 'true'
+  set buffer formatcmd "run(){ tidy -wrap 80 -q --indent yes --indent-spaces 2  2>/dev/null || true; } && run"
+}
+
 hook global WinSetOption filetype=c %{
   set buffer lintcmd 'true'
   set buffer formatcmd "clang-format -style='WebKit'"
@@ -127,8 +134,17 @@ hook global WinSetOption filetype=nix %{
 }
 
 hook global WinSetOption filetype=terraform %{
-  set buffer formatcmd 'terraform fmt'
+  set buffer formatcmd 'terraform fmt -'
+  map global user f ':format<ret>'
 }
+
+hook global WinSetOption filetype=json %{
+  set buffer formatcmd 'jq'
+  map global user f ':format<ret>'
+}
+
+# hook global WinSetOption filetype=terraform %{
+# }
 
 hook global WinSetOption filetype=(markdown|latex) %{
   map global user f ':spell <ret>'
