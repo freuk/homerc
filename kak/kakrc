@@ -28,10 +28,16 @@ map global user K <A-K>
 map global user s <A-s>
 map global user ) <A-)>
 map global user ( <A-(>
-map global user w <A-w>
+# map global user w <A-w>
+
+define-command stripw %{ try %{ execute-keys -draft \%s\h+$<ret>d } }
+map global user w ':stripw<ret>'
+
 map global user . <A-.>
 map global user <space> <A-space>
 map global user <semicolon> <A-semicolon>
+
+map global user t '|sort<ret>'
 
 map global user m :mark-word<ret>
 map global user M :mark-clear<ret>
@@ -71,8 +77,9 @@ add-highlighter global/ column '80' default,rgb:111111
 #Control-P imitation
 def find -params 1 -shell-script-candidates %{ find -type f } %{ edit %arg{1} }
 # map global normal <C-p> ':find '
-map global normal <c-b> ': fzf-mode<ret>'
+map global normal <c-b> ': fzf-mode<ret>b'
 map global normal <c-p> ': fzf-mode<ret>f'
+map global normal <c-t> ': fzf-mode<ret>t'
 hook global ModuleLoaded fzf %{
     set-option global fzf_file_command "rg"
 }
@@ -116,11 +123,15 @@ hook global WinSetOption filetype=python %{
   set buffer lintcmd 'true'
   set buffer formatcmd "black -"
 }
+
+define-command fast_tags %{ nop %sh{ fast-tags **/*.hs} }
+
 hook global WinSetOption filetype=haskell %{
   map global user H '<a-|>xargs hoogle-lucky <ret>'
   map global user h ':lsp-hover <ret>'
   map global user d ':lsp-definition <ret>'
   map global user f ':format<ret>'
+  hook buffer BufWritePre .* fast_tags
   set buffer lintcmd 'hlint'
   set buffer formatcmd 'ormolu'
   lint-enable
