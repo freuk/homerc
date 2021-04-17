@@ -57,6 +57,17 @@ __fzf_select__() {
   done
   echo
 }
+
+__fzf_select_file__() {
+  local cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+    -o -type f -print \
+    -o -type l -print 2> /dev/null | cut -b3-"}"
+  eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse $FZF_DEFAULT_OPTS $FZF_CTRL_T_OPTS" $(__fzfcmd) --preview 'bat {}' -m "$@" | while read -r item; do
+    printf '%q ' "$item"
+  done
+  echo
+}
+
 fzf-file-widget() {
   local selected="$(__fzf_select__)"
   READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$selected${READLINE_LINE:$READLINE_POINT}"
@@ -66,8 +77,12 @@ bind -x '"\C-t": fzf-file-widget'
 
 #C-p: editing files
 stty lnext undef
-fzfEdit() { $EDITOR $(__fzf_select__); }
-fzfEdit() { $VISUAL $(__fzf_select__); }
+fzfEdit() {
+  FILE=$(__fzf_select_file__);
+  if [[ -n $FILE ]]; then
+    $EDITOR $FILE
+  fi
+}
 bind -x '"\C-p": fzfEdit'
 
 __fzf_history__() {
@@ -156,3 +171,5 @@ bind -m vi-command '"\C-h": "\C-z\C-h\C-z"'
 bind -m vi-insert '"\C-h": "\C-z\C-h\C-z"'
 
 if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then . ~/.nix-profile/etc/profile.d/nix.sh; fi
+
+PATH=$PATH:$HOME/.daml/bin

@@ -77,6 +77,7 @@ in {
         tm = "tmux";
         tb = "nc termbin.com 9999";
         ls = "exa";
+        cat = "bat";
         ll = "exa -l";
         l = "exa -la";
         gst = "git status";
@@ -87,7 +88,7 @@ in {
         k = "kak";
         gpu = "git pull";
       };
-      bashrcExtra = (builtins.readFile ./bashrc) + ''
+      bashrcExtra = (builtins.readFile ./bashrc.sh) + ''
         . ~/.nix-profile/etc/profile.d/hm-session-vars.sh
       '';
     };
