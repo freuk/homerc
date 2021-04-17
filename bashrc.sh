@@ -40,6 +40,8 @@ bind -m emacs-standard '"\C-z": vi-editing-mode'
 #rebinding "clear"
 bind -x '"\C-l": clear'
 
+export FZF_TMUX_HEIGHT="100%"
+
 #fzf helper
 __fzfcmd() {
   [ -n "$TMUX_PANE" ] && { [ "${FZF_TMUX:-0}" != 0 ] || [ -n "$FZF_TMUX_OPTS" ]; } &&
