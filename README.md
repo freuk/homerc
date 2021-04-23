@@ -6,10 +6,10 @@ for a non-nixos system:
 curl -L https://nixos.org/nix/install | sh
 . /home/cc/.nix-profile/etc/profile.d/nix.sh
 
-#making everything 20.03
+#making everything 20.09
 nix-channel --remove nixpkgs
-nix-channel --add https://nixos.org/channels/nixos-20.03 nixpkgs
-nix-channel --add https://github.com/rycee/home-manager/archive/release-20.03.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-20.09 nixpkgs
+nix-channel --add https://github.com/rycee/home-manager/archive/release-20.09.tar.gz home-manager
 nix-channel --update
 
 #putting dotfiles in position
