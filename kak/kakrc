@@ -80,6 +80,7 @@ def find -params 1 -shell-script-candidates %{ find -type f } %{ edit %arg{1} }
 map global normal <c-b> ': fzf-mode<ret>b'
 map global normal <c-p> ': fzf-mode<ret>f'
 map global normal <c-t> ': fzf-mode<ret>t'
+map global normal <c-g> ': fzf-mode<ret>v'
 hook global ModuleLoaded fzf %{
     set-option global fzf_file_command "rg"
 }
@@ -152,6 +153,11 @@ hook global WinSetOption filetype=terraform %{
 
 hook global WinSetOption filetype=json %{
   set buffer formatcmd 'jq'
+  map global user f ':format<ret>'
+}
+
+hook global WinSetOption filetype=css %{
+  set buffer formatcmd 'prettier --stdin-filepath in.css'
   map global user f ':format<ret>'
 }
 

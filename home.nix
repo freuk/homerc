@@ -1,59 +1,47 @@
 { config, pkgs, ... }:
-let
-  context = import ./context.nix { };
-  x11 = context.x11;
-  optionalX11Attrs = as: if (context.x11) then as else { };
-  optionalX11s = ls: if (context.x11) then ls else [ ];
+let context = import ./context.nix { };
 in {
-  home.stateVersion = "20.03";
+  home.stateVersion = "20.09";
+  home.username = "fre";
+  home.homeDirectory = "/home/fre";
 
   nixpkgs = {
     overlays = [
-      (final: previous:
-        {
-          tomb = previous.tomb.overrideAttrs (o: {
-            src = builtins.fetchTarball
-              "https://github.com/dyne/Tomb/archive/v2.8.1.tar.gz";
-          });
-        } // optionalX11Attrs {
-          # obs-v4l2sink =
-            # previous.lib.callPackageWith previous ./obs-v4l2sink.nix { };
-        })
+      (final: previous: {
+        tomb = previous.tomb.overrideAttrs (o: {
+          src = builtins.fetchTarball
+            "https://github.com/dyne/Tomb/archive/v2.8.1.tar.gz";
+        });
+      })
     ];
   };
 
   home = {
-    packages = with pkgs;
-      [
-        kakoune
-        tomb
-        pinentry-curses
-        kak-lsp
-        nnn
-        tig
-        fasd
-        ripgrep
-        exa
-        tmate
-        gromit-mpx
-        aspell
-        aspellDicts.en
-        aspellDicts.en-computers
-        aspellDicts.en-science
-        nixfmt
-        hwloc
-        htop
-        git
-        tree
-        jq
-        bat
-        fzf
-      ] ++ pkgs.lib.optionals (context.x11) [
-        gnome3.gnome-tweak-tool
-        protonmail-bridge
-        # skypeforlinux
-        conky
-      ];
+    packages = with pkgs; [
+      kakoune
+      tomb
+      pinentry-curses
+      kak-lsp
+      nnn
+      tig
+      fasd
+      ripgrep
+      exa
+      tmate
+      gromit-mpx
+      aspell
+      aspellDicts.en
+      aspellDicts.en-computers
+      aspellDicts.en-science
+      nixfmt
+      hwloc
+      htop
+      git
+      tree
+      jq
+      bat
+      fzf
+    ];
 
     sessionVariables = {
       TERM = "tmux-256color";
@@ -64,7 +52,7 @@ in {
       NNN_PLUG = "f:preview-tui";
       NNN_FIFO = "/tmp/nnn.fifo";
       LANG = "C.UTF-8";
-    } // optionalX11Attrs { BROWSER = "firefox"; };
+    };
   };
 
   programs = {
@@ -104,16 +92,9 @@ in {
       ];
       extraConfig = builtins.readFile ./tmux.cfg;
     };
-  } // optionalX11Attrs {
-    # obs-studio = {
-    #   enable = true;
-    #   plugins = [ pkgs.obs-v4l2sink ];
-    # };
   };
 
-  home.file = {
-    ".inputrc".source = ./inputrc;
-  } // optionalX11Attrs { ".conkyrc".source = ./conkyrc; };
+  home.file = { ".inputrc".source = ./inputrc; };
 
   xdg.configFile = {
     "kak/kakrc".source = ./kak/kakrc;
@@ -121,6 +102,6 @@ in {
     "kak/colors".source = ./kak/colors;
     "kak-lsp/kak-lsp.toml".source = ./kak-lsp.toml;
     "tig/config".source = ./tig.cfg;
-  } // optionalX11Attrs { "gromit-mpx.cfg".source = ./gromit-mpx.cfg; };
+  };
 
 }
